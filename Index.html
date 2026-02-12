@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Be My Valentine?</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #ffdde1;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        #container {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            max-width: 400px;
+            width: 90%;
+            z-index: 10;
+        }
+
+        img {
+            width: 250px;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            color: #d63384;
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        button {
+            padding: 12px 25px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        #yesBtn {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        #yesBtn:hover {
+            transform: scale(1.1);
+        }
+
+        #noBtn {
+            background-color: #f44336;
+            color: white;
+            position: absolute; /* Needed for the jumping effect */
+        }
+
+        .celebrate-text {
+            display: none;
+            color: #d63384;
+            font-size: 2rem;
+            animation: bounce 0.5s infinite alternate;
+        }
+
+        @keyframes bounce {
+            from { transform: translateY(0); }
+            to { transform: translateY(-10px); }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="container">
+        <img id="mainGif" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHYycXp2eXo0eXNidGZ4ZWZ4eXp4eXp4eXp4eXp4eXp4eXp4eCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/qUIm5wu6LAAog/giphy.gif" alt="Puppy Eyes">
+        <h1 id="question">Will you be my Valentine? 🥺</h1>
+        
+        <div class="buttons" id="buttonGroup">
+            <button id="yesBtn" onclick="celebrate()">Yes!</button>
+            <button id="noBtn" onmouseover="moveButton()" onclick="moveButton()">No</button>
+        </div>
+        <h1 class="celebrate-text" id="successMsg">Yay! See you then! ❤️</h1>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <script>
+        const noBtn = document.getElementById('noBtn');
+        const mainGif = document.getElementById('mainGif');
+        const question = document.getElementById('question');
+        const buttonGroup = document.getElementById('buttonGroup');
+        const successMsg = document.getElementById('successMsg');
+
+        // Logic to make the "No" button jump away
+        function moveButton() {
+            // Calculate random positions
+            // Subtracting button dimensions so it doesn't go off-screen
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+            
+            noBtn.style.left = `${x}px`;
+            noBtn.style.top = `${y}px`;
+        }
+
+        // Logic for when she clicks "Yes"
+        function celebrate() {
+            // 1. Change the GIF
+            mainGif.src = "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNnhidGZ4ZWZ4eXp4eXp4eXp4eXp4eXp4eXp4eXp4eXp4eCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l41lI4bYaloLcxXW0/giphy.gif"; 
+            
+            // 2. Hide buttons and question
+            buttonGroup.style.display = 'none';
+            question.style.display = 'none';
+            
+            // 3. Show success message
+            successMsg.style.display = 'block';
+
+            // 4. Trigger Confetti
+            confetti({
+                particleCount: 150,
+                spread: 70,
+                origin: { y: 0.6 }
+            });
+        }
+    </script>
+</body>
+</html>
